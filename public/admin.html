@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SK Cars — Admin Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;600;700&family=Barlow+Condensed:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+/* ─── ROOT ─────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#08090a;--dark:#0f1012;--card:#16181c;--border:#242629;
+  --red:#e8162b;--red2:#c0101f;--green:#22c55e;--yellow:#f59e0b;
+  --white:#f0f0f0;--muted:#6b7280;--sidebar:220px;
+  --font-d:'Bebas Neue',sans-serif;--font-b:'Barlow',sans-serif;--font-c:'Barlow Condensed',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--white);font-family:var(--font-b);min-height:100vh}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;font-family:var(--font-b)}
+input,select,textarea{font-family:var(--font-b)}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--dark)}::-webkit-scrollbar-thumb{background:var(--red);border-radius:2px}
+ 
+/* ─── LOGIN SCREEN ────────────────────── */
+#loginScreen{
+  display:flex;align-items:center;justify-content:center;
+  min-height:100vh;
+  background:radial-gradient(ellipse at 60% 40%, rgba(232,22,43,.08) 0%, transparent 70%),var(--black);
+}
+.login-box{background:var(--card);border:1px solid var(--border);padding:48px 40px;width:100%;max-width:400px}
+.login-logo{font-family:var(--font-d);font-size:2.5rem;letter-spacing:3px;text-align:center;margin-bottom:4px}
+.login-logo span{color:var(--red)}
+.login-sub{text-align:center;color:var(--muted);font-family:var(--font-c);letter-spacing:2px;font-size:.8rem;text-transform:uppercase;margin-bottom:36px}
+.form-field{margin-bottom:16px}
+.form-field label{display:block;font-family:var(--font-c);font-size:.75rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.form-field input{width:100%;background:var(--black);border:1px solid var(--border);padding:13px 16px;color:var(--white);font-size:.9rem;outline:none;transition:.2s}
+.form-field input:focus{border-color:var(--red)}
+.btn-login{width:100%;background:var(--red);border:none;color:#fff;padding:14px;font-family:var(--font-c);font-size:1rem;letter-spacing:3px;text-transform:uppercase;margin-top:8px;transition:.3s;cursor:pointer;text-align:center;user-select:none;}
+.btn-login:hover{background:var(--red2)}
+.login-err{color:var(--red);font-size:.8rem;text-align:center;margin-top:12px;display:none}
+ 
+/* ─── LAYOUT ──────────────────────────── */
+#app{display:none;min-height:100vh}
+ 
+/* ─── SIDEBAR ─────────────────────────── */
+.sidebar{
+  position:fixed;left:0;top:0;bottom:0;width:var(--sidebar);
+  background:var(--dark);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;z-index:100;
+  transition:.3s;
+}
+.sidebar-logo{padding:24px 20px;border-bottom:1px solid var(--border)}
+.sidebar-logo .logo{font-family:var(--font-d);font-size:1.8rem;letter-spacing:2px}
+.sidebar-logo .logo span{color:var(--red)}
+.sidebar-logo .sub{font-family:var(--font-c);font-size:.65rem;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-top:2px}
+.sidebar-nav{flex:1;padding:16px 0;overflow-y:auto}
+.nav-item{
+  display:flex;align-items:center;gap:12px;
+  padding:13px 20px;color:var(--muted);font-family:var(--font-c);font-size:.95rem;
+  letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:.2s;
+  border-left:3px solid transparent;
+}
+.nav-item i{width:18px;text-align:center;font-size:1rem}
+.nav-item:hover{color:var(--white);background:rgba(255,255,255,.03)}
+.nav-item.active{color:var(--white);border-left-color:var(--red);background:rgba(232,22,43,.06)}
+.sidebar-footer{padding:20px;border-top:1px solid var(--border)}
+.admin-info{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.admin-avatar{width:36px;height:36px;background:var(--red);display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:1.2rem;flex-shrink:0}
+.admin-name{font-family:var(--font-c);font-size:.9rem;letter-spacing:1px}
+.admin-role{font-size:.7rem;color:var(--muted)}
+.btn-logout{width:100%;background:transparent;border:1px solid var(--border);color:var(--muted);padding:9px;font-family:var(--font-c);font-size:.8rem;letter-spacing:2px;text-transform:uppercase;transition:.2s}
+.btn-logout:hover{border-color:var(--red);color:var(--red)}
+ 
+/* ─── MAIN CONTENT ────────────────────── */
+.main{margin-left:var(--sidebar);padding:0;min-height:100vh}
+.topbar{
+  background:var(--dark);border-bottom:1px solid var(--border);
+  padding:16px 32px;display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:50;
+}
+.topbar-title{font-family:var(--font-d);font-size:1.6rem;letter-spacing:2px}
+.topbar-actions{display:flex;gap:10px;align-items:center}
+.btn-sm{background:var(--red);border:none;color:#fff;padding:9px 20px;font-family:var(--font-c);font-size:.8rem;letter-spacing:2px;text-transform:uppercase;transition:.2s;display:flex;align-items:center;gap:6px}
+.btn-sm:hover{background:var(--red2)}
+.btn-sm.outline{background:transparent;border:1px solid var(--border);color:var(--muted)}
+.btn-sm.outline:hover{border-color:var(--red);color:var(--red)}
+.page-content{padding:32px}
+ 
+/* ─── SECTIONS ────────────────────────── */
+.section-page{display:none}
+.section-page.active{display:block}
+ 
+/* ─── STAT CARDS ──────────────────────── */
+.stat-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-bottom:32px}
+.stat-card{background:var(--card);border:1px solid var(--border);padding:24px;position:relative;overflow:hidden}
+.stat-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--red)}
+.stat-card.green::before{background:var(--green)}
+.stat-card.yellow::before{background:var(--yellow)}
+.stat-card.blue::before{background:#3b82f6}
+.sc-label{font-family:var(--font-c);font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.sc-value{font-family:var(--font-d);font-size:2.4rem;letter-spacing:1px;line-height:1}
+.sc-icon{position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:2rem;color:rgba(255,255,255,.05)}
+ 
+/* ─── TABLES ──────────────────────────── */
+.table-wrap{background:var(--card);border:1px solid var(--border);overflow-x:auto}
+.table-header{padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.table-header h3{font-family:var(--font-d);font-size:1.3rem;letter-spacing:1px}
+table{width:100%;border-collapse:collapse}
+thead tr{background:rgba(255,255,255,.02)}
+th{padding:12px 16px;font-family:var(--font-c);font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
+td{padding:12px 16px;font-size:.85rem;border-bottom:1px solid rgba(255,255,255,.03);vertical-align:middle}
+tbody tr:hover{background:rgba(255,255,255,.02)}
+tbody tr:last-child td{border-bottom:none}
+.car-thumb{width:60px;height:40px;object-fit:cover;border:1px solid var(--border)}
+.badge{display:inline-block;padding:3px 10px;font-family:var(--font-c);font-size:.65rem;letter-spacing:1.5px;text-transform:uppercase}
+.badge.active{background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.2)}
+.badge.sold{background:rgba(232,22,43,.1);color:var(--red);border:1px solid rgba(232,22,43,.2)}
+.badge.pending{background:rgba(245,158,11,.1);color:var(--yellow);border:1px solid rgba(245,158,11,.2)}
+.badge.confirmed{background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.2)}
+.badge.cancelled{background:rgba(232,22,43,.1);color:var(--red);border:1px solid rgba(232,22,43,.2)}
+.action-btns{display:flex;gap:6px;flex-wrap:wrap}
+.icon-btn{background:transparent;border:1px solid var(--border);color:var(--muted);width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:.8rem;transition:.2s}
+.icon-btn:hover{border-color:var(--red);color:var(--red)}
+.icon-btn.green-btn:hover{border-color:var(--green);color:var(--green)}
+.icon-btn.yellow-btn:hover{border-color:var(--yellow);color:var(--yellow)}
+.search-bar{background:var(--black);border:1px solid var(--border);padding:8px 14px;color:var(--white);font-size:.85rem;outline:none;width:220px}
+.search-bar:focus{border-color:var(--red)}
+ 
+/* ─── MODAL / DRAWER ──────────────────── */
+.drawer-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:500;align-items:flex-start;justify-content:flex-end}
+.drawer-overlay.open{display:flex}
+.drawer{background:var(--dark);border-left:1px solid var(--border);width:100%;max-width:520px;height:100vh;overflow-y:auto;padding:32px}
+.drawer h2{font-family:var(--font-d);font-size:2rem;letter-spacing:1px;margin-bottom:4px}
+.drawer-sub{font-family:var(--font-c);color:var(--red);letter-spacing:1px;font-size:.85rem;margin-bottom:28px}
+.frow{margin-bottom:16px}
+.frow label{display:block;font-family:var(--font-c);font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.frow input,.frow select,.frow textarea{width:100%;background:var(--black);border:1px solid var(--border);padding:12px 14px;color:var(--white);font-size:.88rem;outline:none;transition:.2s}
+.frow input:focus,.frow select,.frow textarea:focus{border-color:var(--red)}
+.frow select{appearance:none}
+.frow textarea{height:90px;resize:vertical}
+.frow-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.img-preview-wrap{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.img-preview{position:relative;width:80px;height:60px}
+.img-preview img{width:100%;height:100%;object-fit:cover;border:1px solid var(--border)}
+.img-preview .del-img{position:absolute;top:-6px;right:-6px;background:var(--red);border:none;color:#fff;width:18px;height:18px;border-radius:50%;font-size:.6rem;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.existing-imgs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.form-actions{display:flex;gap:10px;margin-top:24px}
+.btn-save{flex:1;background:var(--red);border:none;color:#fff;padding:14px;font-family:var(--font-c);font-size:.9rem;letter-spacing:2px;text-transform:uppercase;transition:.2s}
+.btn-save:hover{background:var(--red2)}
+.btn-cancel{background:transparent;border:1px solid var(--border);color:var(--muted);padding:14px 20px;font-family:var(--font-c);font-size:.9rem;letter-spacing:2px;text-transform:uppercase;transition:.2s}
+.btn-cancel:hover{border-color:var(--red);color:var(--red)}
+.form-error{color:var(--red);font-size:.8rem;margin-top:8px;display:none}
+.form-success{color:var(--green);font-size:.8rem;margin-top:8px;display:none}
+.upload-area{border:2px dashed var(--border);padding:20px;text-align:center;cursor:pointer;transition:.2s;position:relative}
+.upload-area:hover{border-color:var(--red)}
+.upload-area input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer}
+.upload-area i{font-size:1.5rem;color:var(--muted);margin-bottom:6px}
+.upload-area p{font-size:.8rem;color:var(--muted)}
+ 
+/* ─── CONFIRM DIALOG ──────────────────── */
+.confirm-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:600;align-items:center;justify-content:center}
+.confirm-overlay.open{display:flex}
+.confirm-box{background:var(--card);border:1px solid var(--border);padding:36px;max-width:380px;width:90%;text-align:center}
+.confirm-box i{font-size:2.5rem;color:var(--red);margin-bottom:16px}
+.confirm-box h3{font-family:var(--font-d);font-size:1.8rem;letter-spacing:1px;margin-bottom:8px}
+.confirm-box p{color:var(--muted);font-size:.88rem;margin-bottom:24px;line-height:1.6}
+.confirm-actions{display:flex;gap:10px;justify-content:center}
+ 
+/* ─── TOAST ───────────────────────────── */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--card);border:1px solid var(--border);padding:14px 20px;font-size:.88rem;z-index:1000;display:flex;align-items:center;gap:10px;min-width:260px;transform:translateY(100px);opacity:0;transition:.3s}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.success{border-left:3px solid var(--green)}
+.toast.error{border-left:3px solid var(--red)}
+.toast i{font-size:1rem}
+.toast.success i{color:var(--green)}
+.toast.error i{color:var(--red)}
+ 
+/* ─── EMPTY / LOADING ─────────────────── */
+.tbl-empty{text-align:center;color:var(--muted);padding:40px;font-size:.9rem}
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid var(--border);border-top-color:var(--red);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+ 
+/* ─── RESPONSIVE ──────────────────────── */
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-left:0}
+  .topbar{padding:14px 16px}
+  .page-content{padding:16px}
+  .stat-cards{grid-template-columns:1fr 1fr}
+  .drawer{max-width:100%}
+}
+</style>
+</head>
+<body>
+ 
+<!-- ══════════════ LOGIN ══════════════════ -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">SK<span>Cars</span></div>
+    <div class="login-sub">Admin Dashboard</div>
+    <div class="form-field">
+      <label>USERNAME</label>
+      <input type="text" id="loginUser" placeholder="admin" autocomplete="off"/>
+    </div>
+    <div class="form-field">
+      <label>PASSWORD</label>
+      <input type="password" id="loginPass" placeholder="••••••••" autocomplete="off"/>
+    </div>
+    <div class="btn-login" id="loginBtn" role="button" tabindex="0">Sign In</div>
+    <div class="login-err" id="loginErr"></div>
+  </div>
+</div>
+ 
+<!-- ══════════════ APP ════════════════════ -->
+<div id="app">
+ 
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo">SK<span>Cars</span></div>
+      <div class="sub">Admin Panel</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-item active" onclick="showPage('dashboard')"><i class="fas fa-chart-line"></i> Dashboard</div>
+      <div class="nav-item" onclick="showPage('cars')"><i class="fas fa-car"></i> Cars</div>
+      <div class="nav-item" onclick="showPage('bookings')"><i class="fas fa-calendar-check"></i> Bookings</div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="admin-info">
+        <div class="admin-avatar" id="adminAvatarLetter">A</div>
+        <div><div class="admin-name" id="adminNameDisplay">Admin</div><div class="admin-role">Super Admin</div></div>
+      </div>
+      <button class="btn-logout" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+    </div>
+  </aside>
+ 
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:12px">
+        <button class="btn-sm outline" id="menuToggle" onclick="document.getElementById('sidebar').classList.toggle('open')" style="display:none"><i class="fas fa-bars"></i></button>
+        <div class="topbar-title" id="topbarTitle">Dashboard</div>
+      </div>
+      <div class="topbar-actions">
+        <a href="index.html" target="_blank" class="btn-sm outline"><i class="fas fa-external-link-alt"></i> View Site</a>
+        <button class="btn-sm" onclick="showPage('cars');openCarDrawer()"><i class="fas fa-plus"></i> Add Car</button>
+      </div>
+    </div>
+ 
+    <div class="page-content">
+ 
+      <!-- ─── DASHBOARD ─── -->
+      <div class="section-page active" id="page-dashboard">
+        <div class="stat-cards">
+          <div class="stat-card"><div class="sc-label">Total Cars</div><div class="sc-value" id="sc-total">—</div><i class="fas fa-car sc-icon"></i></div>
+          <div class="stat-card green"><div class="sc-label">In Stock</div><div class="sc-value" id="sc-stock">—</div><i class="fas fa-check-circle sc-icon"></i></div>
+          <div class="stat-card sold" style="--red:#e8162b"><div class="sc-label">Sold Out</div><div class="sc-value" id="sc-sold">—</div><i class="fas fa-ban sc-icon"></i></div>
+          <div class="stat-card yellow"><div class="sc-label">Bookings</div><div class="sc-value" id="sc-bookings">—</div><i class="fas fa-calendar sc-icon"></i></div>
+          <div class="stat-card blue"><div class="sc-label">Pending</div><div class="sc-value" id="sc-pending">—</div><i class="fas fa-clock sc-icon"></i></div>
+        </div>
+ 
+        <div class="table-wrap">
+          <div class="table-header"><h3>Recent Bookings</h3><button class="btn-sm" onclick="showPage('bookings')">View All</button></div>
+          <table>
+            <thead><tr><th>#</th><th>Car</th><th>Customer</th><th>Phone</th><th>City</th><th>Status</th><th>Date</th></tr></thead>
+            <tbody id="dashBookingsBody"><tr><td colspan="7" class="tbl-empty">Loading…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+ 
+      <!-- ─── CARS ─── -->
+      <div class="section-page" id="page-cars">
+        <div class="table-wrap">
+          <div class="table-header">
+            <h3>All Cars</h3>
+            <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+              <input type="text" class="search-bar" id="carSearch" placeholder="Search cars…" oninput="filterAdminCars()"/>
+              <select class="search-bar" id="carStatusFilter" onchange="filterAdminCars()" style="width:120px">
+                <option value="">All Status</option>
+                <option value="0">In Stock</option>
+                <option value="1">Sold Out</option>
+              </select>
+              <button class="btn-sm" onclick="openCarDrawer()"><i class="fas fa-plus"></i> Add Car</button>
+            </div>
+          </div>
+          <table>
+            <thead><tr><th>Image</th><th>Name</th><th>Price</th><th>Year</th><th>Fuel</th><th>KM</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="carsTableBody"><tr><td colspan="8" class="tbl-empty"><span class="spinner"></span>Loading…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+ 
+      <!-- ─── BOOKINGS ─── -->
+      <div class="section-page" id="page-bookings">
+        <div class="table-wrap">
+          <div class="table-header">
+            <h3>All Bookings</h3>
+            <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+              <input type="text" class="search-bar" id="bookSearch" placeholder="Search bookings…" oninput="filterBookings()"/>
+              <select class="search-bar" id="bookStatusFilter" onchange="filterBookings()" style="width:130px">
+                <option value="">All Status</option>
+                <option value="pending">Pending</option>
+                <option value="confirmed">Confirmed</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
+            </div>
+          </div>
+          <table>
+            <thead><tr><th>#</th><th>Car</th><th>Customer</th><th>Phone</th><th>City</th><th>Note</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
+            <tbody id="bookingsTableBody"><tr><td colspan="9" class="tbl-empty"><span class="spinner"></span>Loading…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+ 
+    </div><!-- /page-content -->
+  </div><!-- /main -->
+</div><!-- /app -->
+ 
+<!-- ══════ CAR DRAWER ══════════════════════ -->
+<div class="drawer-overlay" id="carDrawer">
+  <div class="drawer">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px">
+      <h2 id="drawerTitle">Add New Car</h2>
+      <button onclick="closeCarDrawer()" style="background:none;border:none;color:var(--muted);font-size:1.4rem;cursor:pointer"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="drawer-sub" id="drawerSub">Fill in the car details below</div>
+ 
+    <input type="hidden" id="editCarId"/>
+ 
+    <div class="frow-grid">
+      <div class="frow"><label>Car Name *</label><input type="text" id="fName" placeholder="e.g. Maruti Swift VXI"/></div>
+      <div class="frow"><label>Price (₹) *</label><input type="number" id="fPrice" placeholder="e.g. 485000"/></div>
+    </div>
+    <div class="frow-grid">
+      <div class="frow"><label>Year *</label><input type="number" id="fYear" placeholder="e.g. 2021" min="2000" max="2025"/></div>
+      <div class="frow"><label>Mileage *</label><input type="text" id="fMileage" placeholder="e.g. 22 kmpl"/></div>
+    </div>
+    <div class="frow-grid">
+      <div class="frow"><label>KM Driven *</label><input type="text" id="fKm" placeholder="e.g. 38,000"/></div>
+      <div class="frow">
+        <label>Fuel Type *</label>
+        <select id="fFuel">
+          <option value="">Select fuel</option>
+          <option>Petrol</option><option>Diesel</option><option>CNG</option><option>Electric</option><option>Hybrid</option>
+        </select>
+      </div>
+    </div>
+    <div class="frow-grid">
+      <div class="frow"><label>Rating</label><input type="number" id="fRating" placeholder="4.5" min="1" max="5" step="0.1"/></div>
+      <div class="frow"><label>Reviews Count</label><input type="number" id="fReviews" placeholder="0"/></div>
+    </div>
+    <div class="frow"><label>Badge (optional)</label><input type="text" id="fBadge" placeholder="e.g. Hot Deal, New Arrival"/></div>
+    <div class="frow"><label>Description *</label><textarea id="fDesc" placeholder="Short description about this car…"></textarea></div>
+ 
+    <div class="frow">
+      <label>Car Images (max 8)</label>
+      <!-- Existing images (edit mode) -->
+      <div class="existing-imgs" id="existingImgs"></div>
+      <!-- New upload -->
+      <div class="upload-area" onclick="document.getElementById('fImages').click()">
+        <input type="file" id="fImages" accept="image/jpeg,image/png,image/webp" multiple style="display:none" onchange="previewImages(event)"/>
+        <i class="fas fa-cloud-upload-alt"></i>
+        <p>Click to upload images (JPEG, PNG, WebP • max 5MB each)</p>
+      </div>
+      <div class="img-preview-wrap" id="imgPreviewWrap"></div>
+    </div>
+ 
+    <div class="form-error" id="drawerErr"></div>
+    <div class="form-success" id="drawerOk"></div>
+ 
+    <div class="form-actions">
+      <button class="btn-cancel" onclick="closeCarDrawer()">Cancel</button>
+      <button class="btn-save" id="saveCarBtn" onclick="saveCar()"><i class="fas fa-save"></i> Save Car</button>
+    </div>
+  </div>
+</div>
+ 
+<!-- ══════ CONFIRM DIALOG ═════════════════ -->
+<div class="confirm-overlay" id="confirmDialog">
+  <div class="confirm-box">
+    <i class="fas fa-exclamation-triangle" id="confirmIcon"></i>
+    <h3 id="confirmTitle">Are you sure?</h3>
+    <p id="confirmMsg">This action cannot be undone.</p>
+    <div class="confirm-actions">
+      <button class="btn-cancel" onclick="closeConfirm()">Cancel</button>
+      <button class="btn-save" id="confirmOkBtn" style="flex:none;padding:12px 28px">Confirm</button>
+    </div>
+  </div>
+</div>
+ 
+<!-- ══════ TOAST ══════════════════════════ -->
+<div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toastMsg"></span></div>
+ 
+<script>
+/* ════════════════════════════════════════════════
+   SK CARS ADMIN — admin.js (inline)
+════════════════════════════════════════════════ */
+const API = 'http://localhost:5000/api';
+/* ── cookie helpers (Edge-compatible) ── */
+function setCookie(n,v,h){document.cookie=n+'='+encodeURIComponent(v)+';path=/;max-age='+(h*3600);}
+function getCookie(n){const m=document.cookie.match('(^|;)\s*'+n+'=([^;]+)');return m?decodeURIComponent(m.pop()):'';}
+function delCookie(n){document.cookie=n+'=;path=/;max-age=0;';}
+let TOKEN = getCookie('sk_admin_token') || '';
+let allCarsData = [];
+let allBookData = [];
+let newFiles    = [];
+ 
+/* ─── HELPERS ───────────────────────────────── */
+function authHeaders() {
+  return { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN };
+}
+ 
+function showToast(msg, type = 'success') {
+  const t = document.getElementById('toast');
+  const i = t.querySelector('i');
+  t.className = 'toast ' + type;
+  i.className = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
+  document.getElementById('toastMsg').textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+ 
+function confirm(title, msg, onOk, icon = 'fa-exclamation-triangle') {
+  document.getElementById('confirmTitle').textContent = title;
+  document.getElementById('confirmMsg').textContent   = msg;
+  document.getElementById('confirmIcon').className    = 'fas ' + icon;
+  document.getElementById('confirmDialog').classList.add('open');
+  document.getElementById('confirmOkBtn').onclick = () => { closeConfirm(); onOk(); };
+}
+function closeConfirm() { document.getElementById('confirmDialog').classList.remove('open'); }
+ 
+function fmtDate(d) { return new Date(d).toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' }); }
+function fmtPrice(p) { return '₹' + Number(p).toLocaleString('en-IN'); }
+ 
+/* ─── AUTH ──────────────────────────────────── */
+async function doLogin() {
+  const username = document.getElementById('loginUser').value.trim();
+  const password = document.getElementById('loginPass').value;
+  const errEl    = document.getElementById('loginErr');
+  errEl.style.display = 'none';
+ 
+  const btn = document.querySelector('.btn-login');
+  btn.textContent = 'Signing in…';
+  btn.disabled    = true;
+ 
+  try {
+    const res  = await fetch(`${API}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+    const json = await res.json();
+    if (!json.success) throw new Error(json.message);
+ 
+    TOKEN = json.token;
+    setCookie('sk_admin_token', TOKEN, 8);
+    const uname = json.username || 'Admin';
+    document.getElementById('adminNameDisplay').textContent    = uname;
+    document.getElementById('adminAvatarLetter').textContent   = uname[0].toUpperCase();
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('app').style.display         = 'block';
+    document.getElementById('app').style.minHeight       = '100vh';
+    initDashboard();
+  } catch (err) {
+    errEl.textContent   = err.message || 'Login failed';
+    errEl.style.display = 'block';
+  } finally {
+    btn.textContent = 'Sign In';
+    btn.disabled    = false;
+  }
+}
+ 
+function doLogout() {
+  TOKEN = '';
+  delCookie('sk_admin_token');
+  document.getElementById('app').style.display         = 'none';
+  document.getElementById('loginScreen').style.display = 'flex';
+}
+ 
+async function checkToken() {
+  // Only verify if we actually have a saved token
+  TOKEN = getCookie('sk_admin_token') || '';
+  if (!TOKEN) return; // no token = stay on login screen, no error shown
+ 
+  try {
+    const res  = await fetch(`${API}/auth/verify`, { headers: { Authorization: 'Bearer ' + TOKEN } });
+    const json = await res.json();
+    if (!json.success) {
+      TOKEN = '';
+      delCookie('sk_admin_token');
+      return; // silently stay on login screen
+    }
+    document.getElementById('adminNameDisplay').textContent  = json.admin.username;
+    document.getElementById('adminAvatarLetter').textContent = json.admin.username[0].toUpperCase();
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('app').style.display         = 'block';
+    initDashboard();
+  } catch (e) {
+    TOKEN = '';
+    delCookie('sk_admin_token');
+    // silently fail - stay on login page
+  }
+}
+ 
+/* ─── NAVIGATION ─────────────────────────────── */
+const pageTitles = { dashboard:'Dashboard', cars:'Manage Cars', bookings:'Bookings' };
+ 
+function showPage(name) {
+  document.querySelectorAll('.section-page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => {
+    if (n.textContent.toLowerCase().includes(name.slice(0,4))) n.classList.add('active');
+  });
+  document.getElementById('topbarTitle').textContent = pageTitles[name] || name;
+  if (name === 'cars')     loadAdminCars();
+  if (name === 'bookings') loadBookings();
+}
+ 
+/* ─── DASHBOARD ──────────────────────────────── */
+async function initDashboard() {
+  await Promise.all([loadDashboardStats(), loadDashBookings()]);
+}
+ 
+async function loadDashboardStats() {
+  try {
+    const [cRes, bRes] = await Promise.all([
+      fetch(`${API}/cars/admin/all`,  { headers: { Authorization: 'Bearer ' + TOKEN } }),
+      fetch(`${API}/bookings`,         { headers: { Authorization: 'Bearer ' + TOKEN } })
+    ]);
+    const cJson = await cRes.json();
+    const bJson = await bRes.json();
+ 
+    const cars     = cJson.data || [];
+    const bookings = bJson.data || [];
+    const inStock  = cars.filter(c => !c.sold).length;
+    const sold     = cars.filter(c =>  c.sold).length;
+    const pending  = bookings.filter(b => b.status === 'pending').length;
+ 
+    document.getElementById('sc-total').textContent    = cars.length;
+    document.getElementById('sc-stock').textContent    = inStock;
+    document.getElementById('sc-sold').textContent     = sold;
+    document.getElementById('sc-bookings').textContent = bookings.length;
+    document.getElementById('sc-pending').textContent  = pending;
+  } catch {}
+}
+ 
+async function loadDashBookings() {
+  try {
+    const res  = await fetch(`${API}/bookings`, { headers: { Authorization: 'Bearer ' + TOKEN } });
+    const json = await res.json();
+    const rows = (json.data || []).slice(0, 8);
+    const tbody = document.getElementById('dashBookingsBody');
+    if (!rows.length) { tbody.innerHTML = '<tr><td colspan="7" class="tbl-empty">No bookings yet</td></tr>'; return; }
+    tbody.innerHTML = rows.map((b, i) => `
+      <tr>
+        <td>${b.id}</td>
+        <td>${b.car_name}</td>
+        <td>${b.name}</td>
+        <td>${b.phone}</td>
+        <td>${b.city}</td>
+        <td><span class="badge ${b.status}">${b.status}</span></td>
+        <td>${fmtDate(b.created_at)}</td>
+      </tr>`).join('');
+  } catch {}
+}
+ 
+/* ─── CARS TABLE ─────────────────────────────── */
+async function loadAdminCars() {
+  const tbody = document.getElementById('carsTableBody');
+  tbody.innerHTML = '<tr><td colspan="8" class="tbl-empty"><span class="spinner"></span>Loading…</td></tr>';
+  try {
+    const res  = await fetch(`${API}/cars/admin/all`, { headers: { Authorization: 'Bearer ' + TOKEN } });
+    const json = await res.json();
+    allCarsData = json.data || [];
+    renderCarsTable(allCarsData);
+  } catch {
+    tbody.innerHTML = '<tr><td colspan="8" class="tbl-empty">Failed to load cars</td></tr>';
+  }
+}
+ 
+function renderCarsTable(list) {
+  const tbody = document.getElementById('carsTableBody');
+  if (!list.length) { tbody.innerHTML = '<tr><td colspan="8" class="tbl-empty">No cars found</td></tr>'; return; }
+  tbody.innerHTML = list.map(c => {
+    const thumb = c.images && c.images.length ? c.images[0].url : 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=120';
+    return `<tr>
+      <td><img src="${thumb}" class="car-thumb" alt="${c.name}"/></td>
+      <td><strong>${c.name}</strong></td>
+      <td>${fmtPrice(c.price)}</td>
+      <td>${c.year}</td>
+      <td>${c.fuel}</td>
+      <td>${c.km} km</td>
+      <td><span class="badge ${c.sold ? 'sold' : 'active'}">${c.sold ? 'Sold Out' : 'In Stock'}</span></td>
+      <td>
+        <div class="action-btns">
+          <button class="icon-btn yellow-btn" title="Edit" onclick="openCarDrawer(${c.id})"><i class="fas fa-pen"></i></button>
+          <button class="icon-btn ${c.sold ? 'green-btn' : ''}" title="${c.sold ? 'Restore' : 'Mark Sold'}" onclick="toggleSold(${c.id}, ${c.sold ? 0 : 1}, '${c.name.replace(/'/g,"\\'")}')">
+            <i class="fas ${c.sold ? 'fa-undo' : 'fa-ban'}"></i>
+          </button>
+          <button class="icon-btn" title="Delete" onclick="deleteCar(${c.id}, '${c.name.replace(/'/g,"\\'")}')"><i class="fas fa-trash"></i></button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+}
+ 
+function filterAdminCars() {
+  const q      = document.getElementById('carSearch').value.toLowerCase();
+  const status = document.getElementById('carStatusFilter').value;
+  const filtered = allCarsData.filter(c => {
+    const matchQ = !q || c.name.toLowerCase().includes(q) || c.fuel.toLowerCase().includes(q);
+    const matchS = status === '' || String(c.sold) === status;
+    return matchQ && matchS;
+  });
+  renderCarsTable(filtered);
+}
+ 
+/* ─── MARK SOLD / RESTORE ───────────────────── */
+async function toggleSold(id, sold, name) {
+  const msg = sold ? `Mark "${name}" as SOLD OUT?` : `Restore "${name}" back to inventory?`;
+  confirm(sold ? 'Mark as Sold' : 'Restore Car', msg, async () => {
+    try {
+      const res  = await fetch(`${API}/cars/${id}/sold`, {
+        method: 'PATCH',
+        headers: authHeaders(),
+        body: JSON.stringify({ sold })
+      });
+      const json = await res.json();
+      if (!json.success) throw new Error(json.message);
+      showToast(json.message);
+      loadAdminCars();
+      loadDashboardStats();
+    } catch (err) {
+      showToast(err.message, 'error');
+    }
+  }, sold ? 'fa-ban' : 'fa-undo');
+}
+ 
+/* ─── DELETE CAR ────────────────────────────── */
+async function deleteCar(id, name) {
+  confirm('Delete Car', `Permanently delete "${name}"? All images will also be removed.`, async () => {
+    try {
+      const res  = await fetch(`${API}/cars/${id}`, { method: 'DELETE', headers: authHeaders() });
+      const json = await res.json();
+      if (!json.success) throw new Error(json.message);
+      showToast('Car deleted successfully');
+      loadAdminCars();
+      loadDashboardStats();
+    } catch (err) {
+      showToast(err.message, 'error');
+    }
+  });
+}
+ 
+/* ─── CAR DRAWER ─────────────────────────────── */
+function openCarDrawer(carId) {
+  newFiles = [];
+  document.getElementById('imgPreviewWrap').innerHTML = '';
+  document.getElementById('existingImgs').innerHTML   = '';
+  document.getElementById('drawerErr').style.display  = 'none';
+  document.getElementById('drawerOk').style.display   = 'none';
+  document.getElementById('fImages').value            = '';
+ 
+  if (carId) {
+    // EDIT MODE
+    document.getElementById('drawerTitle').textContent = 'Edit Car';
+    document.getElementById('drawerSub').textContent   = 'Update car details or add/remove images';
+    document.getElementById('editCarId').value         = carId;
+    const car = allCarsData.find(c => c.id === carId);
+    if (!car) return;
+    document.getElementById('fName').value    = car.name;
+    document.getElementById('fPrice').value   = car.price;
+    document.getElementById('fYear').value    = car.year;
+    document.getElementById('fKm').value      = car.km;
+    document.getElementById('fFuel').value    = car.fuel;
+    document.getElementById('fMileage').value = car.mileage;
+    document.getElementById('fRating').value  = car.rating;
+    document.getElementById('fReviews').value = car.reviews;
+    document.getElementById('fBadge').value   = car.badge || '';
+    document.getElementById('fDesc').value    = car.description || '';
+ 
+    // Show existing images with delete buttons
+    const existingWrap = document.getElementById('existingImgs');
+    if (car.images && car.images.length) {
+      car.images.forEach(img => {
+        const wrap = document.createElement('div');
+        wrap.className = 'img-preview';
+        wrap.innerHTML = `
+          <img src="${img.url}" alt="car image"/>
+          <button class="del-img" onclick="deleteCarImage(${img.id}, this.parentElement)" title="Remove"><i class="fas fa-times"></i></button>`;
+        existingWrap.appendChild(wrap);
+      });
+    }
+  } else {
+    // ADD MODE
+    document.getElementById('drawerTitle').textContent = 'Add New Car';
+    document.getElementById('drawerSub').textContent   = 'Fill in the car details below';
+    document.getElementById('editCarId').value         = '';
+    ['fName','fPrice','fYear','fKm','fMileage','fRating','fReviews','fBadge','fDesc'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('fFuel').value = '';
+  }
+ 
+  document.getElementById('carDrawer').classList.add('open');
+}
+ 
+function closeCarDrawer() {
+  document.getElementById('carDrawer').classList.remove('open');
+  newFiles = [];
+}
+ 
+function previewImages(e) {
+  const files = Array.from(e.target.files);
+  newFiles = [...newFiles, ...files];
+  const wrap = document.getElementById('imgPreviewWrap');
+  files.forEach((file, idx) => {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const div = document.createElement('div');
+      div.className = 'img-preview';
+      div.innerHTML = `
+        <img src="${ev.target.result}" alt="preview"/>
+        <button class="del-img" onclick="removeNewFile(${newFiles.length - files.length + idx}, this.parentElement)"><i class="fas fa-times"></i></button>`;
+      wrap.appendChild(div);
+    };
+    reader.readAsDataURL(file);
+  });
+}
+ 
+function removeNewFile(idx, el) {
+  newFiles.splice(idx, 1);
+  el.remove();
+}
+ 
+async function deleteCarImage(imgId, el) {
+  try {
+    const res  = await fetch(`${API}/cars/image/${imgId}`, { method: 'DELETE', headers: authHeaders() });
+    const json = await res.json();
+    if (!json.success) throw new Error(json.message);
+    el.remove();
+    showToast('Image removed');
+  } catch (err) {
+    showToast(err.message, 'error');
+  }
+}
+ 
+async function saveCar() {
+  const errEl = document.getElementById('drawerErr');
+  const okEl  = document.getElementById('drawerOk');
+  errEl.style.display = 'none';
+  okEl.style.display  = 'none';
+ 
+  const name    = document.getElementById('fName').value.trim();
+  const price   = document.getElementById('fPrice').value;
+  const year    = document.getElementById('fYear').value;
+  const km      = document.getElementById('fKm').value.trim();
+  const fuel    = document.getElementById('fFuel').value;
+  const mileage = document.getElementById('fMileage').value.trim();
+  const desc    = document.getElementById('fDesc').value.trim();
+  const editId  = document.getElementById('editCarId').value;
+ 
+  if (!name || !price || !year || !km || !fuel || !mileage || !desc) {
+    errEl.textContent   = 'Please fill all required fields.';
+    errEl.style.display = 'block';
+    return;
+  }
+ 
+  const btn = document.getElementById('saveCarBtn');
+  btn.innerHTML = '<span class="spinner"></span> Saving…';
+  btn.disabled  = true;
+ 
+  try {
+    const fd = new FormData();
+    fd.append('name',        name);
+    fd.append('price',       price);
+    fd.append('year',        year);
+    fd.append('km',          km);
+    fd.append('fuel',        fuel);
+    fd.append('mileage',     mileage);
+    fd.append('rating',      document.getElementById('fRating').value  || 4.5);
+    fd.append('reviews',     document.getElementById('fReviews').value || 0);
+    fd.append('badge',       document.getElementById('fBadge').value   || '');
+    fd.append('description', desc);
+    if (editId) fd.append('sold', 0);
+    newFiles.forEach(f => fd.append('images', f));
+ 
+    const url    = editId ? `${API}/cars/${editId}` : `${API}/cars`;
+    const method = editId ? 'PUT' : 'POST';
+    const res    = await fetch(url, { method, headers: { Authorization: 'Bearer ' + TOKEN }, body: fd });
+    const json   = await res.json();
+    if (!json.success) throw new Error(json.message);
+ 
+    okEl.textContent   = editId ? 'Car updated successfully!' : 'Car added successfully!';
+    okEl.style.display = 'block';
+    showToast(okEl.textContent);
+    setTimeout(closeCarDrawer, 1200);
+    loadAdminCars();
+    loadDashboardStats();
+  } catch (err) {
+    errEl.textContent   = err.message || 'Failed to save car.';
+    errEl.style.display = 'block';
+  } finally {
+    btn.innerHTML = '<i class="fas fa-save"></i> Save Car';
+    btn.disabled  = false;
+  }
+}
+ 
+/* ─── BOOKINGS TABLE ──────────────────────────── */
+async function loadBookings() {
+  const tbody = document.getElementById('bookingsTableBody');
+  tbody.innerHTML = '<tr><td colspan="9" class="tbl-empty"><span class="spinner"></span>Loading…</td></tr>';
+  try {
+    const res  = await fetch(`${API}/bookings`, { headers: { Authorization: 'Bearer ' + TOKEN } });
+    const json = await res.json();
+    allBookData = json.data || [];
+    renderBookingsTable(allBookData);
+  } catch {
+    tbody.innerHTML = '<tr><td colspan="9" class="tbl-empty">Failed to load bookings</td></tr>';
+  }
+}
+ 
+function renderBookingsTable(list) {
+  const tbody = document.getElementById('bookingsTableBody');
+  if (!list.length) { tbody.innerHTML = '<tr><td colspan="9" class="tbl-empty">No bookings found</td></tr>'; return; }
+  tbody.innerHTML = list.map(b => `
+    <tr>
+      <td>${b.id}</td>
+      <td>${b.car_name}</td>
+      <td><strong>${b.name}</strong></td>
+      <td>${b.phone}</td>
+      <td>${b.city}</td>
+      <td style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${b.note || '—'}</td>
+      <td>
+        <select class="search-bar" style="width:110px;padding:5px 8px;font-size:.75rem" onchange="updateBookingStatus(${b.id}, this.value)">
+          <option value="pending"   ${b.status==='pending'   ?'selected':''}>Pending</option>
+          <option value="confirmed" ${b.status==='confirmed' ?'selected':''}>Confirmed</option>
+          <option value="cancelled" ${b.status==='cancelled' ?'selected':''}>Cancelled</option>
+        </select>
+      </td>
+      <td style="white-space:nowrap">${fmtDate(b.created_at)}</td>
+      <td>
+        <button class="icon-btn" title="Delete" onclick="deleteBooking(${b.id})"><i class="fas fa-trash"></i></button>
+      </td>
+    </tr>`).join('');
+}
+ 
+function filterBookings() {
+  const q      = document.getElementById('bookSearch').value.toLowerCase();
+  const status = document.getElementById('bookStatusFilter').value;
+  const filtered = allBookData.filter(b => {
+    const matchQ = !q || b.name.toLowerCase().includes(q) || b.car_name.toLowerCase().includes(q) || b.phone.includes(q);
+    const matchS = !status || b.status === status;
+    return matchQ && matchS;
+  });
+  renderBookingsTable(filtered);
+}
+ 
+async function updateBookingStatus(id, status) {
+  try {
+    const res  = await fetch(`${API}/bookings/${id}/status`, {
+      method: 'PATCH', headers: authHeaders(), body: JSON.stringify({ status })
+    });
+    const json = await res.json();
+    if (!json.success) throw new Error(json.message);
+    showToast('Status updated to ' + status);
+    loadDashboardStats();
+    // update local data
+    const b = allBookData.find(x => x.id === id);
+    if (b) b.status = status;
+  } catch (err) {
+    showToast(err.message, 'error');
+  }
+}
+ 
+async function deleteBooking(id) {
+  confirm('Delete Booking', 'Permanently delete this booking record?', async () => {
+    try {
+      const res  = await fetch(`${API}/bookings/${id}`, { method: 'DELETE', headers: authHeaders() });
+      const json = await res.json();
+      if (!json.success) throw new Error(json.message);
+      showToast('Booking deleted');
+      loadBookings();
+      loadDashboardStats();
+    } catch (err) {
+      showToast(err.message, 'error');
+    }
+  });
+}
+ 
+/* ─── RESPONSIVE MENU TOGGLE ─────────────────── */
+if (window.innerWidth <= 768) {
+  document.getElementById('menuToggle').style.display = 'flex';
+}
+ 
+/* ─── INIT ───────────────────────────────────── */
+// Attach login via addEventListener - most reliable cross-browser approach
+document.addEventListener('DOMContentLoaded', function() {
+  const btn = document.getElementById('loginBtn');
+  const passInput = document.getElementById('loginPass');
+ 
+  if (btn) {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      doLogin();
+    });
+  }
+ 
+  if (passInput) {
+    passInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        e.stopPropagation();
+        doLogin();
+      }
+    });
+  }
+ 
+  checkToken();
+});
+</script>
+</body>
+</html>

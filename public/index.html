@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SK Cars – Premium Used Cars | Coimbatore</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;600;700&family=Barlow+Condensed:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="logo">SK<span>Cars</span></div>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#cars">Cars</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#home"    onclick="toggleMenu()">Home</a>
+  <a href="#cars"    onclick="toggleMenu()">Cars</a>
+  <a href="#about"   onclick="toggleMenu()">About</a>
+  <a href="#contact" onclick="toggleMenu()">Contact</a>
+</div>
+
+<div id="bottom-nav">
+  <div class="bnav-items">
+    <a href="#home"    class="bnav-item active"><i class="fas fa-home"></i><span>Home</span></a>
+    <a href="#cars"    class="bnav-item"><i class="fas fa-car"></i><span>Cars</span></a>
+    <a href="#cars"    class="bnav-item" onclick="document.getElementById('searchInput').focus()"><i class="fas fa-search"></i><span>Search</span></a>
+    <a href="#contact" class="bnav-item"><i class="fas fa-envelope"></i><span>Contact</span></a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section id="home">
+  <div id="hero">
+    <div class="slides-wrapper" id="slider">
+      <div class="slide active">
+        <div class="slide-bg" style="background-image:url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1600')"></div>
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <div class="slide-label">Premium Collection</div>
+          <h1 class="slide-title">Drive Your Dream Today</h1>
+          <p class="slide-desc">Browse our handpicked inventory of certified used cars — quality you can trust, prices you'll love.</p>
+          <div class="slide-btns">
+            <button class="btn-primary" onclick="smoothScroll('#cars')">View Cars</button>
+            <button class="btn-outline" onclick="smoothScroll('#contact')">Contact Us</button>
+          </div>
+        </div>
+      </div>
+      <div class="slide">
+        <div class="slide-bg" style="background-image:url('https://images.unsplash.com/photo-1555215695-3004980ad54e?w=1600')"></div>
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <div class="slide-label">Best Prices Guaranteed</div>
+          <h1 class="slide-title">Affordable Luxury On Wheels</h1>
+          <p class="slide-desc">From compact hatchbacks to powerful SUVs — find your perfect match within your budget.</p>
+          <div class="slide-btns">
+            <button class="btn-primary" onclick="smoothScroll('#budget')">Filter by Budget</button>
+            <button class="btn-outline" onclick="smoothScroll('#about')">Who We Are</button>
+          </div>
+        </div>
+      </div>
+      <div class="slide">
+        <div class="slide-bg" style="background-image:url('https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=1600')"></div>
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <div class="slide-label">Sell Your Car</div>
+          <h1 class="slide-title">Get The Best Value For Yours</h1>
+          <p class="slide-desc">Thinking of selling? We offer transparent evaluations and instant quotes — zero hassle.</p>
+          <div class="slide-btns">
+            <button class="btn-primary" onclick="smoothScroll('#contact')">Sell Your Car</button>
+            <button class="btn-outline" onclick="smoothScroll('#about')">Learn More</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-dots" id="heroDots"></div>
+    <div class="hero-scroll"><i class="fas fa-chevron-down"></i><span>Scroll</span></div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat"><div class="stat-num">500+</div><div class="stat-lbl">Cars Sold</div></div>
+  <div class="stat"><div class="stat-num">10+</div><div class="stat-lbl">Years Experience</div></div>
+  <div class="stat"><div class="stat-num">98%</div><div class="stat-lbl">Happy Customers</div></div>
+  <div class="stat"><div class="stat-num" id="stockCount">—</div><div class="stat-lbl">Cars In Stock</div></div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header reveal">
+    <span class="section-tag">Who We Are</span>
+    <h2 class="section-title">ABOUT SK CARS</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="about-grid">
+    <div class="about-img-wrap reveal-l">
+      <img src="https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800" alt="SK Cars Showroom"/>
+      <div class="about-badge"><div class="num">10+</div><div class="lbl">Years of<br>Trust</div></div>
+    </div>
+    <div class="about-text reveal-r">
+      <h2>Coimbatore's Most Trusted Used Car Dealer</h2>
+      <p>At SK Cars, we believe everyone deserves a reliable vehicle at a fair price. Since our founding, we've helped thousands of families and individuals across Tamil Nadu find their perfect car — with full transparency, no hidden charges, and genuine after-sale support.</p>
+      <div class="about-features">
+        <div class="about-feat"><div class="about-feat-icon"><i class="fas fa-shield-alt"></i></div><div><h4>Trusted Dealer</h4><p>RC verified, loan-free, and quality-checked before listing.</p></div></div>
+        <div class="about-feat"><div class="about-feat-icon"><i class="fas fa-tag"></i></div><div><h4>Affordable Prices</h4><p>Best market rates with zero hidden charges.</p></div></div>
+        <div class="about-feat"><div class="about-feat-icon"><i class="fas fa-tools"></i></div><div><h4>Quality Checked</h4><p>Every car undergoes a 100-point inspection before sale.</p></div></div>
+        <div class="about-feat"><div class="about-feat-icon"><i class="fas fa-file-alt"></i></div><div><h4>Easy Documentation</h4><p>We handle all paperwork — quick and hassle-free transfers.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BUDGET FILTER -->
+<section id="budget">
+  <div class="section-header reveal">
+    <span class="section-tag">Find Your Match</span>
+    <h2 class="section-title">FILTER BY BUDGET</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="budget-grid reveal">
+    <button class="budget-btn active" data-min="0"       data-max="9999999" onclick="filterBudget(this)"><span>All Cars</span></button>
+    <button class="budget-btn"        data-min="100000"  data-max="500000"  onclick="filterBudget(this)"><span>₹1–5 Lakhs</span></button>
+    <button class="budget-btn"        data-min="500000"  data-max="1000000" onclick="filterBudget(this)"><span>₹5–10 Lakhs</span></button>
+    <button class="budget-btn"        data-min="1000000" data-max="1500000" onclick="filterBudget(this)"><span>₹10–15 Lakhs</span></button>
+    <button class="budget-btn"        data-min="1500000" data-max="2000000" onclick="filterBudget(this)"><span>₹15–20 Lakhs</span></button>
+    <button class="budget-btn"        data-min="2000000" data-max="3000000" onclick="filterBudget(this)"><span>₹20–30 Lakhs</span></button>
+    <button class="budget-btn"        data-min="3000000" data-max="4000000" onclick="filterBudget(this)"><span>₹30–40 Lakhs</span></button>
+    <button class="budget-btn"        data-min="4000000" data-max="5000000" onclick="filterBudget(this)"><span>₹40–50 Lakhs</span></button>
+  </div>
+</section>
+
+<!-- CARS -->
+<section id="cars">
+  <div class="section-header reveal">
+    <span class="section-tag">Our Inventory</span>
+    <h2 class="section-title">FEATURED CARS</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="search-wrap reveal">
+    <input type="text" id="searchInput" placeholder="Search by model, brand, fuel type…" oninput="handleSearch()"/>
+    <button><i class="fas fa-search"></i></button>
+  </div>
+  <div class="cars-grid" id="carsGrid">
+    <div class="loading-state"><i class="fas fa-spinner fa-spin"></i> Loading cars…</div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header reveal">
+    <span class="section-tag">Reach Us</span>
+    <h2 class="section-title">CONTACT US</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-info reveal-l">
+      <h3>Let's Talk Cars</h3>
+      <p>Visit our showroom, call us, or drop a message. Our team is happy to help.</p>
+      <div class="contact-detail">
+        <div class="icon"><i class="fas fa-map-marker-alt"></i></div>
+        <div class="text"><h4>Address</h4><p>123, Avinashi Road, Peelamedu, Coimbatore – 641004, Tamil Nadu</p></div>
+      </div>
+      <div class="contact-detail">
+        <div class="icon"><i class="fas fa-phone"></i></div>
+        <div class="text"><h4>Phone</h4><p>+91 98765 43210</p></div>
+      </div>
+      <div class="contact-detail">
+        <div class="icon"><i class="fas fa-clock"></i></div>
+        <div class="text"><h4>Working Hours</h4><p>Mon–Sat: 9:00 AM – 7:00 PM</p></div>
+      </div>
+      <a href="https://wa.me/919876543210?text=Hi%20SK%20Cars!" class="whatsapp-btn" target="_blank">
+        <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+      </a>
+    </div>
+    <div class="reveal-r">
+      <form class="contact-form" onsubmit="submitContact(event)">
+        <input type="text"  placeholder="Your Name"     required/>
+        <input type="tel"   placeholder="Phone Number"  required/>
+        <input type="email" placeholder="Email Address"/>
+        <textarea           placeholder="Your message…" required></textarea>
+        <button type="submit" class="btn-primary" style="width:100%;padding:16px;font-size:1rem;letter-spacing:2px;">Send Message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">SK<span style="color:var(--red)">Cars</span></div>
+  <p style="margin-top:8px;">© 2025 SK Cars, Coimbatore. All rights reserved.</p>
+  <p style="margin-top:4px;color:#444;">Trusted | Affordable | Quality Checked</p>
+</footer>
+
+<!-- BOOKING MODAL -->
+<div class="modal-overlay" id="bookModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+    <div id="modalForm">
+      <h2>Book This Car</h2>
+      <div class="car-ref" id="modalCarName"></div>
+      <input type="hidden" id="bkCarId"/>
+      <input type="text"  id="bkName"  placeholder="Your Full Name"/>
+      <input type="tel"   id="bkPhone" placeholder="Phone Number"/>
+      <input type="text"  id="bkCity"  placeholder="City / Address"/>
+      <textarea id="bkNote" placeholder="Any special requests? (optional)" style="height:80px;"></textarea>
+      <button class="btn-primary" style="width:100%;padding:16px;letter-spacing:2px;font-size:1rem;" onclick="submitBooking()">
+        Confirm Booking
+      </button>
+      <div id="bookError" style="color:#e8162b;font-size:.82rem;margin-top:8px;text-align:center;display:none;"></div>
+    </div>
+    <div class="success-msg" id="successMsg">
+      <i class="fas fa-check-circle"></i>
+      <h3>Booking Successful!</h3>
+      <p>We'll call you within 24 hours to confirm your booking details.</p>
+    </div>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" onclick="closeLightbox()"><i class="fas fa-times"></i></button>
+  <img id="lbImg" src="" alt="Car Image"/>
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>

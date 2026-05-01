@@ -22,7 +22,7 @@ a{color:inherit;text-decoration:none}
 button{cursor:pointer;font-family:var(--font-b)}
 input,select,textarea{font-family:var(--font-b)}
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--dark)}::-webkit-scrollbar-thumb{background:var(--red);border-radius:2px}
- 
+
 /* ─── LOGIN SCREEN ────────────────────── */
 #loginScreen{
   display:flex;align-items:center;justify-content:center;
@@ -40,10 +40,10 @@ input,select,textarea{font-family:var(--font-b)}
 .btn-login{width:100%;background:var(--red);border:none;color:#fff;padding:14px;font-family:var(--font-c);font-size:1rem;letter-spacing:3px;text-transform:uppercase;margin-top:8px;transition:.3s;cursor:pointer;text-align:center;user-select:none;}
 .btn-login:hover{background:var(--red2)}
 .login-err{color:var(--red);font-size:.8rem;text-align:center;margin-top:12px;display:none}
- 
+
 /* ─── LAYOUT ──────────────────────────── */
 #app{display:none;min-height:100vh}
- 
+
 /* ─── SIDEBAR ─────────────────────────── */
 .sidebar{
   position:fixed;left:0;top:0;bottom:0;width:var(--sidebar);
@@ -72,7 +72,7 @@ input,select,textarea{font-family:var(--font-b)}
 .admin-role{font-size:.7rem;color:var(--muted)}
 .btn-logout{width:100%;background:transparent;border:1px solid var(--border);color:var(--muted);padding:9px;font-family:var(--font-c);font-size:.8rem;letter-spacing:2px;text-transform:uppercase;transition:.2s}
 .btn-logout:hover{border-color:var(--red);color:var(--red)}
- 
+
 /* ─── MAIN CONTENT ────────────────────── */
 .main{margin-left:var(--sidebar);padding:0;min-height:100vh}
 .topbar{
@@ -87,11 +87,11 @@ input,select,textarea{font-family:var(--font-b)}
 .btn-sm.outline{background:transparent;border:1px solid var(--border);color:var(--muted)}
 .btn-sm.outline:hover{border-color:var(--red);color:var(--red)}
 .page-content{padding:32px}
- 
+
 /* ─── SECTIONS ────────────────────────── */
 .section-page{display:none}
 .section-page.active{display:block}
- 
+
 /* ─── STAT CARDS ──────────────────────── */
 .stat-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-bottom:32px}
 .stat-card{background:var(--card);border:1px solid var(--border);padding:24px;position:relative;overflow:hidden}
@@ -102,7 +102,7 @@ input,select,textarea{font-family:var(--font-b)}
 .sc-label{font-family:var(--font-c);font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
 .sc-value{font-family:var(--font-d);font-size:2.4rem;letter-spacing:1px;line-height:1}
 .sc-icon{position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:2rem;color:rgba(255,255,255,.05)}
- 
+
 /* ─── TABLES ──────────────────────────── */
 .table-wrap{background:var(--card);border:1px solid var(--border);overflow-x:auto}
 .table-header{padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
@@ -127,7 +127,7 @@ tbody tr:last-child td{border-bottom:none}
 .icon-btn.yellow-btn:hover{border-color:var(--yellow);color:var(--yellow)}
 .search-bar{background:var(--black);border:1px solid var(--border);padding:8px 14px;color:var(--white);font-size:.85rem;outline:none;width:220px}
 .search-bar:focus{border-color:var(--red)}
- 
+
 /* ─── MODAL / DRAWER ──────────────────── */
 .drawer-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:500;align-items:flex-start;justify-content:flex-end}
 .drawer-overlay.open{display:flex}
@@ -158,7 +158,7 @@ tbody tr:last-child td{border-bottom:none}
 .upload-area input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer}
 .upload-area i{font-size:1.5rem;color:var(--muted);margin-bottom:6px}
 .upload-area p{font-size:.8rem;color:var(--muted)}
- 
+
 /* ─── CONFIRM DIALOG ──────────────────── */
 .confirm-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:600;align-items:center;justify-content:center}
 .confirm-overlay.open{display:flex}
@@ -167,7 +167,7 @@ tbody tr:last-child td{border-bottom:none}
 .confirm-box h3{font-family:var(--font-d);font-size:1.8rem;letter-spacing:1px;margin-bottom:8px}
 .confirm-box p{color:var(--muted);font-size:.88rem;margin-bottom:24px;line-height:1.6}
 .confirm-actions{display:flex;gap:10px;justify-content:center}
- 
+
 /* ─── TOAST ───────────────────────────── */
 .toast{position:fixed;bottom:24px;right:24px;background:var(--card);border:1px solid var(--border);padding:14px 20px;font-size:.88rem;z-index:1000;display:flex;align-items:center;gap:10px;min-width:260px;transform:translateY(100px);opacity:0;transition:.3s}
 .toast.show{transform:translateY(0);opacity:1}
@@ -176,12 +176,12 @@ tbody tr:last-child td{border-bottom:none}
 .toast i{font-size:1rem}
 .toast.success i{color:var(--green)}
 .toast.error i{color:var(--red)}
- 
+
 /* ─── EMPTY / LOADING ─────────────────── */
 .tbl-empty{text-align:center;color:var(--muted);padding:40px;font-size:.9rem}
 .spinner{display:inline-block;width:16px;height:16px;border:2px solid var(--border);border-top-color:var(--red);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px}
 @keyframes spin{to{transform:rotate(360deg)}}
- 
+
 /* ─── RESPONSIVE ──────────────────────── */
 @media(max-width:768px){
   .sidebar{transform:translateX(-100%)}
@@ -195,7 +195,7 @@ tbody tr:last-child td{border-bottom:none}
 </style>
 </head>
 <body>
- 
+
 <!-- ══════════════ LOGIN ══════════════════ -->
 <div id="loginScreen">
   <div class="login-box">
@@ -213,10 +213,10 @@ tbody tr:last-child td{border-bottom:none}
     <div class="login-err" id="loginErr"></div>
   </div>
 </div>
- 
+
 <!-- ══════════════ APP ════════════════════ -->
 <div id="app">
- 
+
   <!-- SIDEBAR -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-logo">
@@ -236,7 +236,7 @@ tbody tr:last-child td{border-bottom:none}
       <button class="btn-logout" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
     </div>
   </aside>
- 
+
   <!-- MAIN -->
   <div class="main">
     <div class="topbar">
@@ -249,9 +249,9 @@ tbody tr:last-child td{border-bottom:none}
         <button class="btn-sm" onclick="showPage('cars');openCarDrawer()"><i class="fas fa-plus"></i> Add Car</button>
       </div>
     </div>
- 
+
     <div class="page-content">
- 
+
       <!-- ─── DASHBOARD ─── -->
       <div class="section-page active" id="page-dashboard">
         <div class="stat-cards">
@@ -261,7 +261,7 @@ tbody tr:last-child td{border-bottom:none}
           <div class="stat-card yellow"><div class="sc-label">Bookings</div><div class="sc-value" id="sc-bookings">—</div><i class="fas fa-calendar sc-icon"></i></div>
           <div class="stat-card blue"><div class="sc-label">Pending</div><div class="sc-value" id="sc-pending">—</div><i class="fas fa-clock sc-icon"></i></div>
         </div>
- 
+
         <div class="table-wrap">
           <div class="table-header"><h3>Recent Bookings</h3><button class="btn-sm" onclick="showPage('bookings')">View All</button></div>
           <table>
@@ -270,7 +270,7 @@ tbody tr:last-child td{border-bottom:none}
           </table>
         </div>
       </div>
- 
+
       <!-- ─── CARS ─── -->
       <div class="section-page" id="page-cars">
         <div class="table-wrap">
@@ -292,7 +292,7 @@ tbody tr:last-child td{border-bottom:none}
           </table>
         </div>
       </div>
- 
+
       <!-- ─── BOOKINGS ─── -->
       <div class="section-page" id="page-bookings">
         <div class="table-wrap">
@@ -314,11 +314,11 @@ tbody tr:last-child td{border-bottom:none}
           </table>
         </div>
       </div>
- 
+
     </div><!-- /page-content -->
   </div><!-- /main -->
 </div><!-- /app -->
- 
+
 <!-- ══════ CAR DRAWER ══════════════════════ -->
 <div class="drawer-overlay" id="carDrawer">
   <div class="drawer">
@@ -327,9 +327,9 @@ tbody tr:last-child td{border-bottom:none}
       <button onclick="closeCarDrawer()" style="background:none;border:none;color:var(--muted);font-size:1.4rem;cursor:pointer"><i class="fas fa-times"></i></button>
     </div>
     <div class="drawer-sub" id="drawerSub">Fill in the car details below</div>
- 
+
     <input type="hidden" id="editCarId"/>
- 
+
     <div class="frow-grid">
       <div class="frow"><label>Car Name *</label><input type="text" id="fName" placeholder="e.g. Maruti Swift VXI"/></div>
       <div class="frow"><label>Price (₹) *</label><input type="number" id="fPrice" placeholder="e.g. 485000"/></div>
@@ -354,7 +354,7 @@ tbody tr:last-child td{border-bottom:none}
     </div>
     <div class="frow"><label>Badge (optional)</label><input type="text" id="fBadge" placeholder="e.g. Hot Deal, New Arrival"/></div>
     <div class="frow"><label>Description *</label><textarea id="fDesc" placeholder="Short description about this car…"></textarea></div>
- 
+
     <div class="frow">
       <label>Car Images (max 8)</label>
       <!-- Existing images (edit mode) -->
@@ -367,17 +367,17 @@ tbody tr:last-child td{border-bottom:none}
       </div>
       <div class="img-preview-wrap" id="imgPreviewWrap"></div>
     </div>
- 
+
     <div class="form-error" id="drawerErr"></div>
     <div class="form-success" id="drawerOk"></div>
- 
+
     <div class="form-actions">
       <button class="btn-cancel" onclick="closeCarDrawer()">Cancel</button>
       <button class="btn-save" id="saveCarBtn" onclick="saveCar()"><i class="fas fa-save"></i> Save Car</button>
     </div>
   </div>
 </div>
- 
+
 <!-- ══════ CONFIRM DIALOG ═════════════════ -->
 <div class="confirm-overlay" id="confirmDialog">
   <div class="confirm-box">
@@ -390,15 +390,15 @@ tbody tr:last-child td{border-bottom:none}
     </div>
   </div>
 </div>
- 
+
 <!-- ══════ TOAST ══════════════════════════ -->
 <div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toastMsg"></span></div>
- 
+
 <script>
 /* ════════════════════════════════════════════════
    SK CARS ADMIN — admin.js (inline)
 ════════════════════════════════════════════════ */
-const API = 'http://localhost:5000/api';
+const API = 'https://sk-cars.onrender.com/api';
 /* ── cookie helpers (Edge-compatible) ── */
 function setCookie(n,v,h){document.cookie=n+'='+encodeURIComponent(v)+';path=/;max-age='+(h*3600);}
 function getCookie(n){const m=document.cookie.match('(^|;)\s*'+n+'=([^;]+)');return m?decodeURIComponent(m.pop()):'';}
@@ -407,12 +407,12 @@ let TOKEN = getCookie('sk_admin_token') || '';
 let allCarsData = [];
 let allBookData = [];
 let newFiles    = [];
- 
+
 /* ─── HELPERS ───────────────────────────────── */
 function authHeaders() {
   return { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN };
 }
- 
+
 function showToast(msg, type = 'success') {
   const t = document.getElementById('toast');
   const i = t.querySelector('i');
@@ -422,7 +422,7 @@ function showToast(msg, type = 'success') {
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 3500);
 }
- 
+
 function confirm(title, msg, onOk, icon = 'fa-exclamation-triangle') {
   document.getElementById('confirmTitle').textContent = title;
   document.getElementById('confirmMsg').textContent   = msg;
@@ -431,21 +431,21 @@ function confirm(title, msg, onOk, icon = 'fa-exclamation-triangle') {
   document.getElementById('confirmOkBtn').onclick = () => { closeConfirm(); onOk(); };
 }
 function closeConfirm() { document.getElementById('confirmDialog').classList.remove('open'); }
- 
+
 function fmtDate(d) { return new Date(d).toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' }); }
 function fmtPrice(p) { return '₹' + Number(p).toLocaleString('en-IN'); }
- 
+
 /* ─── AUTH ──────────────────────────────────── */
 async function doLogin() {
   const username = document.getElementById('loginUser').value.trim();
   const password = document.getElementById('loginPass').value;
   const errEl    = document.getElementById('loginErr');
   errEl.style.display = 'none';
- 
+
   const btn = document.querySelector('.btn-login');
   btn.textContent = 'Signing in…';
   btn.disabled    = true;
- 
+
   try {
     const res  = await fetch(`${API}/auth/login`, {
       method: 'POST',
@@ -454,7 +454,7 @@ async function doLogin() {
     });
     const json = await res.json();
     if (!json.success) throw new Error(json.message);
- 
+
     TOKEN = json.token;
     setCookie('sk_admin_token', TOKEN, 8);
     const uname = json.username || 'Admin';
@@ -472,19 +472,19 @@ async function doLogin() {
     btn.disabled    = false;
   }
 }
- 
+
 function doLogout() {
   TOKEN = '';
   delCookie('sk_admin_token');
   document.getElementById('app').style.display         = 'none';
   document.getElementById('loginScreen').style.display = 'flex';
 }
- 
+
 async function checkToken() {
   // Only verify if we actually have a saved token
   TOKEN = getCookie('sk_admin_token') || '';
   if (!TOKEN) return; // no token = stay on login screen, no error shown
- 
+
   try {
     const res  = await fetch(`${API}/auth/verify`, { headers: { Authorization: 'Bearer ' + TOKEN } });
     const json = await res.json();
@@ -504,10 +504,10 @@ async function checkToken() {
     // silently fail - stay on login page
   }
 }
- 
+
 /* ─── NAVIGATION ─────────────────────────────── */
 const pageTitles = { dashboard:'Dashboard', cars:'Manage Cars', bookings:'Bookings' };
- 
+
 function showPage(name) {
   document.querySelectorAll('.section-page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -519,12 +519,12 @@ function showPage(name) {
   if (name === 'cars')     loadAdminCars();
   if (name === 'bookings') loadBookings();
 }
- 
+
 /* ─── DASHBOARD ──────────────────────────────── */
 async function initDashboard() {
   await Promise.all([loadDashboardStats(), loadDashBookings()]);
 }
- 
+
 async function loadDashboardStats() {
   try {
     const [cRes, bRes] = await Promise.all([
@@ -533,13 +533,13 @@ async function loadDashboardStats() {
     ]);
     const cJson = await cRes.json();
     const bJson = await bRes.json();
- 
+
     const cars     = cJson.data || [];
     const bookings = bJson.data || [];
     const inStock  = cars.filter(c => !c.sold).length;
     const sold     = cars.filter(c =>  c.sold).length;
     const pending  = bookings.filter(b => b.status === 'pending').length;
- 
+
     document.getElementById('sc-total').textContent    = cars.length;
     document.getElementById('sc-stock').textContent    = inStock;
     document.getElementById('sc-sold').textContent     = sold;
@@ -547,7 +547,7 @@ async function loadDashboardStats() {
     document.getElementById('sc-pending').textContent  = pending;
   } catch {}
 }
- 
+
 async function loadDashBookings() {
   try {
     const res  = await fetch(`${API}/bookings`, { headers: { Authorization: 'Bearer ' + TOKEN } });
@@ -567,7 +567,7 @@ async function loadDashBookings() {
       </tr>`).join('');
   } catch {}
 }
- 
+
 /* ─── CARS TABLE ─────────────────────────────── */
 async function loadAdminCars() {
   const tbody = document.getElementById('carsTableBody');
@@ -581,7 +581,7 @@ async function loadAdminCars() {
     tbody.innerHTML = '<tr><td colspan="8" class="tbl-empty">Failed to load cars</td></tr>';
   }
 }
- 
+
 function renderCarsTable(list) {
   const tbody = document.getElementById('carsTableBody');
   if (!list.length) { tbody.innerHTML = '<tr><td colspan="8" class="tbl-empty">No cars found</td></tr>'; return; }
@@ -607,7 +607,7 @@ function renderCarsTable(list) {
     </tr>`;
   }).join('');
 }
- 
+
 function filterAdminCars() {
   const q      = document.getElementById('carSearch').value.toLowerCase();
   const status = document.getElementById('carStatusFilter').value;
@@ -618,7 +618,7 @@ function filterAdminCars() {
   });
   renderCarsTable(filtered);
 }
- 
+
 /* ─── MARK SOLD / RESTORE ───────────────────── */
 async function toggleSold(id, sold, name) {
   const msg = sold ? `Mark "${name}" as SOLD OUT?` : `Restore "${name}" back to inventory?`;
@@ -639,7 +639,7 @@ async function toggleSold(id, sold, name) {
     }
   }, sold ? 'fa-ban' : 'fa-undo');
 }
- 
+
 /* ─── DELETE CAR ────────────────────────────── */
 async function deleteCar(id, name) {
   confirm('Delete Car', `Permanently delete "${name}"? All images will also be removed.`, async () => {
@@ -655,7 +655,7 @@ async function deleteCar(id, name) {
     }
   });
 }
- 
+
 /* ─── CAR DRAWER ─────────────────────────────── */
 function openCarDrawer(carId) {
   newFiles = [];
@@ -664,7 +664,7 @@ function openCarDrawer(carId) {
   document.getElementById('drawerErr').style.display  = 'none';
   document.getElementById('drawerOk').style.display   = 'none';
   document.getElementById('fImages').value            = '';
- 
+
   if (carId) {
     // EDIT MODE
     document.getElementById('drawerTitle').textContent = 'Edit Car';
@@ -682,7 +682,7 @@ function openCarDrawer(carId) {
     document.getElementById('fReviews').value = car.reviews;
     document.getElementById('fBadge').value   = car.badge || '';
     document.getElementById('fDesc').value    = car.description || '';
- 
+
     // Show existing images with delete buttons
     const existingWrap = document.getElementById('existingImgs');
     if (car.images && car.images.length) {
@@ -703,15 +703,15 @@ function openCarDrawer(carId) {
     ['fName','fPrice','fYear','fKm','fMileage','fRating','fReviews','fBadge','fDesc'].forEach(id => document.getElementById(id).value = '');
     document.getElementById('fFuel').value = '';
   }
- 
+
   document.getElementById('carDrawer').classList.add('open');
 }
- 
+
 function closeCarDrawer() {
   document.getElementById('carDrawer').classList.remove('open');
   newFiles = [];
 }
- 
+
 function previewImages(e) {
   const files = Array.from(e.target.files);
   newFiles = [...newFiles, ...files];
@@ -729,12 +729,12 @@ function previewImages(e) {
     reader.readAsDataURL(file);
   });
 }
- 
+
 function removeNewFile(idx, el) {
   newFiles.splice(idx, 1);
   el.remove();
 }
- 
+
 async function deleteCarImage(imgId, el) {
   try {
     const res  = await fetch(`${API}/cars/image/${imgId}`, { method: 'DELETE', headers: authHeaders() });
@@ -746,13 +746,13 @@ async function deleteCarImage(imgId, el) {
     showToast(err.message, 'error');
   }
 }
- 
+
 async function saveCar() {
   const errEl = document.getElementById('drawerErr');
   const okEl  = document.getElementById('drawerOk');
   errEl.style.display = 'none';
   okEl.style.display  = 'none';
- 
+
   const name    = document.getElementById('fName').value.trim();
   const price   = document.getElementById('fPrice').value;
   const year    = document.getElementById('fYear').value;
@@ -761,17 +761,17 @@ async function saveCar() {
   const mileage = document.getElementById('fMileage').value.trim();
   const desc    = document.getElementById('fDesc').value.trim();
   const editId  = document.getElementById('editCarId').value;
- 
+
   if (!name || !price || !year || !km || !fuel || !mileage || !desc) {
     errEl.textContent   = 'Please fill all required fields.';
     errEl.style.display = 'block';
     return;
   }
- 
+
   const btn = document.getElementById('saveCarBtn');
   btn.innerHTML = '<span class="spinner"></span> Saving…';
   btn.disabled  = true;
- 
+
   try {
     const fd = new FormData();
     fd.append('name',        name);
@@ -786,13 +786,13 @@ async function saveCar() {
     fd.append('description', desc);
     if (editId) fd.append('sold', 0);
     newFiles.forEach(f => fd.append('images', f));
- 
+
     const url    = editId ? `${API}/cars/${editId}` : `${API}/cars`;
     const method = editId ? 'PUT' : 'POST';
     const res    = await fetch(url, { method, headers: { Authorization: 'Bearer ' + TOKEN }, body: fd });
     const json   = await res.json();
     if (!json.success) throw new Error(json.message);
- 
+
     okEl.textContent   = editId ? 'Car updated successfully!' : 'Car added successfully!';
     okEl.style.display = 'block';
     showToast(okEl.textContent);
@@ -807,7 +807,7 @@ async function saveCar() {
     btn.disabled  = false;
   }
 }
- 
+
 /* ─── BOOKINGS TABLE ──────────────────────────── */
 async function loadBookings() {
   const tbody = document.getElementById('bookingsTableBody');
@@ -821,7 +821,7 @@ async function loadBookings() {
     tbody.innerHTML = '<tr><td colspan="9" class="tbl-empty">Failed to load bookings</td></tr>';
   }
 }
- 
+
 function renderBookingsTable(list) {
   const tbody = document.getElementById('bookingsTableBody');
   if (!list.length) { tbody.innerHTML = '<tr><td colspan="9" class="tbl-empty">No bookings found</td></tr>'; return; }
@@ -846,7 +846,7 @@ function renderBookingsTable(list) {
       </td>
     </tr>`).join('');
 }
- 
+
 function filterBookings() {
   const q      = document.getElementById('bookSearch').value.toLowerCase();
   const status = document.getElementById('bookStatusFilter').value;
@@ -857,7 +857,7 @@ function filterBookings() {
   });
   renderBookingsTable(filtered);
 }
- 
+
 async function updateBookingStatus(id, status) {
   try {
     const res  = await fetch(`${API}/bookings/${id}/status`, {
@@ -874,7 +874,7 @@ async function updateBookingStatus(id, status) {
     showToast(err.message, 'error');
   }
 }
- 
+
 async function deleteBooking(id) {
   confirm('Delete Booking', 'Permanently delete this booking record?', async () => {
     try {
@@ -889,18 +889,18 @@ async function deleteBooking(id) {
     }
   });
 }
- 
+
 /* ─── RESPONSIVE MENU TOGGLE ─────────────────── */
 if (window.innerWidth <= 768) {
   document.getElementById('menuToggle').style.display = 'flex';
 }
- 
+
 /* ─── INIT ───────────────────────────────────── */
 // Attach login via addEventListener - most reliable cross-browser approach
 document.addEventListener('DOMContentLoaded', function() {
   const btn = document.getElementById('loginBtn');
   const passInput = document.getElementById('loginPass');
- 
+
   if (btn) {
     btn.addEventListener('click', function(e) {
       e.preventDefault();
@@ -908,7 +908,7 @@ document.addEventListener('DOMContentLoaded', function() {
       doLogin();
     });
   }
- 
+
   if (passInput) {
     passInput.addEventListener('keydown', function(e) {
       if (e.key === 'Enter') {
@@ -918,7 +918,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }
- 
+
   checkToken();
 });
 </script>

@@ -2,7 +2,7 @@
    SK CARS — main.js  (API-connected frontend)
    ================================================ */
  
-const API = 'http://localhost:5000/api';
+const API = 'https://sk-cars.onrender.com/api';
  
 /* ─── STATE ─────────────────────────────────────── */
 let allCars      = [];
@@ -343,4 +343,3 @@ document.getElementById('lightbox').addEventListener('click',  e => { if (e.targ
 /* ─── INIT ───────────────────────────────────────── */
 observeReveal();
 loadCars();
- 

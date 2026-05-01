@@ -22,7 +22,11 @@ async function attachImages(cars) {
     ...car,
     images: imgs
       .filter(i => i.car_id === car.id)
-      .map(i => ({ id: i.id, url: `${BASE_URL}/uploads/${i.filename}`, is_primary: i.is_primary }))
+      .map(i => ({
+        id:         i.id,
+        url:        i.filename.startsWith('http') ? i.filename : `${BASE_URL}/uploads/${i.filename}`,
+        is_primary: i.is_primary
+      }))
   }));
 }
 
@@ -98,9 +102,11 @@ router.post('/', auth, upload.array('images', 8), async (req, res) => {
 
     if (req.files && req.files.length) {
       for (let i = 0; i < req.files.length; i++) {
+        // Cloudinary returns full URL in path, filename has public_id
+        const imageUrl = req.files[i].path || req.files[i].filename;
         await conn.query(
           'INSERT INTO car_images (car_id, filename, is_primary) VALUES (?, ?, ?)',
-          [carId, req.files[i].filename, i === 0 ? 1 : 0]
+          [carId, imageUrl, i === 0 ? 1 : 0]
         );
       }
     }
@@ -135,9 +141,10 @@ router.put('/:id', auth, upload.array('images', 8), async (req, res) => {
       const [existing] = await conn.query('SELECT id FROM car_images WHERE car_id=?', [req.params.id]);
       const isPrimary = existing.length === 0 ? 1 : 0;
       for (let i = 0; i < req.files.length; i++) {
+        const imageUrl = req.files[i].path || req.files[i].filename;
         await conn.query(
           'INSERT INTO car_images (car_id, filename, is_primary) VALUES (?, ?, ?)',
-          [req.params.id, req.files[i].filename, i === 0 ? isPrimary : 0]
+          [req.params.id, imageUrl, i === 0 ? isPrimary : 0]
         );
       }
     }
